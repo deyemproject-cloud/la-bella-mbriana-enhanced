@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>La Bella 'Mbriana - Trattoria Napoletana</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #8B3A2A;
+            --primary-dark: #702d20;
+            --secondary: #D4C89A;
+            --background-light: #F5F0E8;
+            --background-dark: #4a5d4e;
+            --background-card: #566b5b;
+            --text-dark: #191110;
+            --text-body: #5A4A42;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: var(--background-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(245, 240, 232, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(139, 58, 42, 0.1);
+            animation: fadeInDown 0.8s ease-out 0.2s both;
+        }
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-links { display: none; align-items: center; gap: 32px; }
+        @media (min-width: 768px) { .nav-links { display: flex; } }
+        .nav-link {
+            position: relative;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link:hover::after { transform: scaleX(1); }
+        .nav-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        .nav-logo:hover { transform: scale(1.05); }
+        .nav-logo-icon {
+            font-size: 1.875rem;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+        .nav-logo:hover .nav-logo-icon { transform: rotate(10deg); }
+        .nav-logo-text {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.125rem;
+            letter-spacing: -0.02em;
+            margin-top: 4px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 58, 42, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(139, 58, 42, 0.4);
+        }
+        .mobile-menu-btn {
+            display: block;
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        @media (min-width: 768px) { .mobile-menu-btn { display: none; } }
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 24px 80px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--background-light) 0%, #ebe5d8 100%);
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238B3A2A' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 900px; }
+        .hero-subtitle {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--primary);
+            opacity: 0.8;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+        .hero-description {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            font-weight: 300;
+            color: var(--text-body);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease-out 0.7s both;
+        }
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            animation: fadeInUp 0.8s ease-out 0.9s both;
+        }
+        @media (min-width: 640px) {
+            .hero-buttons { flex-direction: row; justify-content: center; }
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 12px 32px;
+            border-radius: 8px;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-secondary:hover {
+            background: rgba(139, 58, 42, 0.05);
+            transform: translateY(-2px);
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: fadeIn 1s ease-out 1.5s both;
+        }
+        .scroll-indicator span {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--primary);
+            opacity: 0.6;
+        }
+        .scroll-indicator .material-symbols-outlined {
+            color: var(--primary);
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+        }
+        .section { padding: 100px 24px; }
+        @media (min-width: 768px) { .section { padding: 120px 48px; } }
+        .container { max-width: 1280px; margin: 0 auto; }
+        .story-section { background: var(--background-light); }
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+        @media (min-width: 1024px) { .story-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
+        .story-content { order: 2; }
+        @media (min-width: 1024px) { .story-content { order: 1; } }
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .section-label-line { width: 48px; height: 2px; background: var(--primary); }
+        .section-label-text {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+        }
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 32px;
+        }
+        .section-text {
+            font-size: 1.125rem;
+            color: var(--text-body);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+        .story-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: gap 0.3s ease;
+        }
+        .story-link:hover { gap: 16px; }
+        .story-image-wrapper { order: 1; position: relative; }
+        @media (min-width: 1024px) { .story-image-wrapper { order: 2; } }
+        .story-image-border {
+            position: absolute;
+            inset: -16px;
+            border: 2px solid rgba(139, 58, 42, 0.2);
+            border-radius: 16px;
+            transform: rotate(3deg);
+            transition: transform 0.5s ease;
+        }
+        .story-image-wrapper:hover .story-image-border { transform: rotate(0deg); }
+        .story-image {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/5;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        .story-image:hover img { transform: scale(1.05); }
+        .menu-section { background: var(--background-dark); color: var(--secondary); }
+        .menu-header { text-align: center; margin-bottom: 64px; }
+        .menu-icon { font-size: 3rem; opacity: 0.8; margin-bottom: 16px; }
+        .menu-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin-bottom: 16px; }
+        .menu-divider { width: 80px; height: 4px; background: var(--primary); margin: 0 auto 24px; border-radius: 2px; }
+        .menu-description { font-size: 1.125rem; opacity: 0.7; max-width: 500px; margin: 0 auto; }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+        @media (min-width: 768px) { .menu-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .menu-grid { grid-template-columns: repeat(3, 1fr); } }
+        .menu-card {
+            background: var(--background-card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        .menu-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .menu-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+        .menu-card-image { aspect-ratio: 4/3; overflow: hidden; position: relative; }
+        .menu-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+            transition: all 0.5s ease;
+        }
+        .menu-card:hover .menu-card-image img { opacity: 1; transform: scale(1.1); }
+        .menu-card-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        .menu-card-content { padding: 32px; }
+        .menu-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(212, 200, 154, 0.1);
+            margin-bottom: 16px;
+        }
+        .menu-card-title { font-size: 1.25rem; font-weight: 700; }
+        .menu-card-price { font-size: 1.125rem; font-weight: 600; opacity: 0.8; }
+        .menu-card-description { font-size: 0.9375rem; opacity: 0.7; line-height: 1.6; }
+        .menu-footer { text-align: center; margin-top: 48px; }
+        .btn-outline {
+            background: transparent;
+            color: var(--secondary);
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 14px 32px;
+            border-radius: 8px;
+            border: 2px solid var(--secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover { background: var(--secondary); color: var(--background-dark); }
+        .gallery-section { background: var(--background-light); }
+        .gallery-header { text-align: center; margin-bottom: 64px; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            grid-auto-rows: 200px;
+        }
+        @media (min-width: 768px) { .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+        }
+        .gallery-item.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .gallery-item:hover { transform: scale(1.02); z-index: 10; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+        @media (min-width: 768px) { .gallery-item:nth-child(5) { grid-column: span 2; } }
+        .reservations-section { background: #ebe7df; padding: 100px 24px; }
+        .reservations-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--background-light);
+            padding: 48px 32px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(139, 58, 42, 0.1);
+        }
+        @media (min-width: 768px) { .reservations-card { padding: 64px 48px; } }
+        .reservations-header { text-align: center; margin-bottom: 40px; }
+        .reservations-title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; color: var(--text-dark); margin-bottom: 12px; }
+        .reservations-subtitle { color: var(--text-body); }
+        .form-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+        @media (min-width: 768px) { .form-grid { grid-template-columns: repeat(2, 1fr); } }
+        .form-field { display: flex; flex-direction: column; gap: 8px; }
+        .form-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-body);
+        }
+        .form-input {
+            width: 100%;
+            background: #faf8f6;
+            border: 1px solid #d4c8c0;
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 1rem;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(139, 58, 42, 0.1); }
+        .btn-full { width: 100%; margin-top: 16px; }
+        .form-note { text-align: center; font-size: 0.75rem; color: var(--text-body); opacity: 0.7; margin-top: 16px; }
+        .footer { background: var(--background-dark); color: var(--secondary); padding: 80px 24px 40px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 48px; margin-bottom: 64px; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+        .footer-brand { display: flex; flex-direction: column; gap: 16px; }
+        .footer-logo { display: flex; align-items: center; gap: 12px; }
+        .footer-logo-icon { font-size: 2rem; }
+        .footer-logo-text { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; }
+        .footer-description { font-size: 0.9375rem; opacity: 0.6; line-height: 1.7; max-width: 300px; }
+        .footer-title { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px; color: white; }
+        .footer-address { font-style: normal; font-size: 0.9375rem; opacity: 0.7; line-height: 1.8; }
+        .footer-address a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
+        .footer-address a:hover { color: white; }
+        .footer-hours { list-style: none; font-size: 0.9375rem; opacity: 0.7; }
+        .footer-hours li { display: flex; justify-content: space-between; max-width: 200px; margin-bottom: 8px; }
+        .footer-social { display: flex; gap: 16px; }
+        .social-link {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 200, 154, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+        .social-link:hover { background: var(--secondary); color: var(--background-dark); transform: translateY(-4px); }
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(212, 200, 154, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.75rem;
+            opacity: 0.4;
+        }
+        @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
+        .footer-links a:hover { color: var(--secondary); opacity: 1; }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a class="nav-link" href="#story">La Storia</a>
+                <a class="nav-link" href="#menu">Menu</a>
+            </div>
+            <a class="nav-logo" href="#">
+                <span class="material-symbols-outlined nav-logo-icon">restaurant</span>
+                <span class="nav-logo-text">La Bella 'Mbriana</span>
+            </a>
+            <div class="nav-links">
+                <a class="nav-link" href="#gallery">Gallery</a>
+                <a class="btn-primary" href="#reservations">Book a Table</a>
+            </div>
+            <button class="mobile-menu-btn material-symbols-outlined" style="font-size: 2rem;">menu</button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-subtitle">Benvenuti a Napoli</span>
+            <h1 class="hero-title">La Bella 'Mbriana</h1>
+            <p class="hero-description">Trattoria Napoletana. Where the spirit of the home meets the soul of the kitchen.</p>
+            <div class="hero-buttons">
+                <a class="btn-primary" href="#reservations">Reserve Your Table</a>
+                <a class="btn-secondary" href="#menu">View Menu</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <span class="material-symbols-outlined">keyboard_arrow_down</span>
+        </div>
+    </header>
+
+    <section class="section story-section" id="story">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-content">
+                    <div class="section-label">
+                        <div class="section-label-line"></div>
+                        <span class="section-label-text">The Spirit of the House</span>
+                    </div>
+                    <h2 class="section-title">More than a legend,<br/>a way of living.</h2>
+                    <p class="section-text">
+                        In Neapolitan folklore, <strong>La Bella 'Mbriana</strong> is the benevolent spirit of the home. She is the unseen guest at every table, the warmth in the hearth, and the reason we leave a chair empty for the unexpected visitor.
+                    </p>
+                    <p class="section-text">
+                        We bring this sacred hospitality to every dish we serve. From the slow-simmered Ragu that tastes of Sunday mornings to the blistered crust of our wood-fired pizzas, we honor centuries of tradition in the heart of the city.
+                    </p>
+                    <a class="story-link" href="#">
+                        Read Our Full Story <span class="material-symbols-outlined">arrow_forward</span>
+                    </a>
+                </div>
+                <div class="story-image-wrapper">
+                    <div class="story-image-border"></div>
+                    <div class="story-image">
+                        <img alt="Chef preparing fresh pasta" src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section menu-section" id="menu">
+        <div class="container">
+            <div class="menu-header">
+                <span class="material-symbols-outlined menu-icon">restaurant_menu</span>
+                <h2 class="menu-title">I Classici</h2>
+                <div class="menu-divider"></div>
+                <p class="menu-description">Timeless recipes passed down through generations, prepared with ingredients sourced directly from Campania.</p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div class="menu-card-image">
+                        <img alt="Pizza Margherita" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"/>
+                        <span class="menu-card-badge">DOP</span>
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3 class="menu-card-title">Pizza Margherita</h3>
+                            <span class="menu-card-price">€12</span>
+                        </div>
+                        <p class="menu-card-description">San Marzano tomato, Buffalo mozzarella from Campania, fresh basil, extra virgin olive oil.</p>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="menu-card-image">
+                        <img alt="Spaghetti Vongole" src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=600"/>
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3 class="menu-card-title">Spaghetti Vongole</h3>
+                            <span class="menu-card-price">€18</span>
+                        </div>
+                        <p class="menu-card-description">Artisanal spaghettoni, fresh clams from the Gulf, garlic, parsley, and a hint of chili.</p>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="menu-card-image">
+                        <img alt="Polpette della Nonna" src="https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600"/>
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3 class="menu-card-title">Polpette della Nonna</h3>
+                            <span class="menu-card-price">€14</span>
+                        </div>
+                        <p class="menu-card-description">Traditional Neapolitan meatballs slowly simmered in Sunday ragu sauce, served with bread.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-footer">
+                <button class="btn-outline">View Full Menu</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section gallery-section" id="gallery">
+        <div class="container">
+            <div class="gallery-header">
+                <span class="section-label-text" style="display: block; margin-bottom: 16px;">Atmosphere</span>
+                <h2 class="section-title">Moments</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img alt="Restaurant interior" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800"/>
+                </div>
+                <div class="gallery-item">
+                    <img alt="Wine pouring" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400"/>
+                </div>
+                <div class="gallery-item">
+                    <img alt="Fresh pasta" src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400"/>
+                </div>
+                <div class="gallery-item">
+                    <img alt="Pizza oven" src="https://images.unsplash.com/photo-1595708684082-a173bb3a06c5?w=800"/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reservations-section" id="reservations">
+        <div class="reservations-card">
+            <div class="reservations-header">
+                <h2 class="reservations-title">Join Us                <h2 class="reservations-title">Join Us at the Table</h2>
+                <p class="reservations-subtitle">Reserve your spot for an authentic Neapolitan experience.</p>
+            </div>
+            <form>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label class="form-label">Date</label>
+                        <input class="form-input" type="date"/>
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Time</label>
+                        <select class="form-input">
+                            <option>18:00</option>
+                            <option>18:30</option>
+                            <option>19:00</option>
+                            <option>19:30</option>
+                            <option>20:00</option>
+                            <option>20:30</option>
+                            <option>21:00</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Guests</label>
+                        <select class="form-input">
+                            <option>2 Guests</option>
+                            <option>3 Guests</option>
+                            <option>4 Guests</option>
+                            <option>5 Guests</option>
+                            <option>6+ Guests</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Full Name</label>
+                        <input class="form-input" placeholder="Your Name" type="text"/>
+                    </div>
+                </div>
+                <button class="btn-primary btn-full" type="button">Confirm Reservation</button>
+                <p class="form-note">For parties larger than 8, please call us directly.</p>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="material-symbols-outlined footer-logo-icon">restaurant</span>
+                        <span class="footer-logo-text">La Bella 'Mbriana</span>
+                    </div>
+                    <p class="footer-description">Bringing the soul of Naples to your table with authentic flavors, warm hospitality, and a touch of magic.</p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Visit Us</h4>
+                    <address class="footer-address">
+                        <p>Via Toledo 156,<br/>80134 Napoli NA, Italy</p>
+                        <p style="margin-top: 16px;"><a href="tel:+390810000000">+39 081 000 0000</a></p>
+                    </address>
+                </div>
+                <div>
+                    <h4 class="footer-title">Hours</h4>
+                    <ul class="footer-hours">
+                        <li><span>Mon</span> <span>Closed</span></li>
+                        <li><span>Tue - Thu</span> <span>18:00 - 23:00</span></li>
+                        <li><span>Fri - Sun</span> <span>18:00 - 00:00</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Follow</h4>
+                    <div class="footer-social">
+                        <a class="social-link" href="#">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                        </a>
+                        <a class="social-link" href="#">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.072 3.269.156 5.023 1.938 5.179 5.179.06 1.265.072 1.645.072 4.849 0 3.205-.012 3.584-.072 4.849-.156 3.269-1.938 5.023-5.179 5.179-1.265.06-1.645.072-4.85.072-3.205 0-3.584-.012-4.849-.072-3.269-.156-5.023-1.938-5.179-5.179-.06-1.265-.072-1.645-.072-4.849 0-3.205.012-3.584.072-4.849.156-3.269 1.938-5.023 5.179-5.179 1.265-.06 1.645-.072 4.849-.072zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 La Bella 'Mbriana Trattoria. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Reveal Animation
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const revealElements = document.querySelectorAll('.story-content, .story-image-wrapper, .menu-header, .menu-card, .gallery-item, .reservations-card');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Gallery items staggered animation
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const galleryObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+        
+        galleryItems.forEach(item => galleryObserver.observe(item));
+
+        // Menu cards staggered animation
+        const menuCards = document.querySelectorAll('.menu-card');
+        const menuObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 150);
+                }
+            });
+        }, observerOptions);
+        
+        menuCards.forEach(card => menuObserver.observe(card));
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
